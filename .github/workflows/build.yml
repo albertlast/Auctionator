@@ -10,6 +10,7 @@ on:
     paths-ignore:
     - "docs/**"
     - ".github/**"
+  workflow_dispatch: { }
 
 jobs:
   build:
