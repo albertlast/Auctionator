@@ -25,29 +25,20 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Fetch upstream and detect changes
-        id: sync
+      - name: Fetch upstream and sync
         run: |
           git remote add upstream https://github.com/TheMouseNest/Auctionator.git
           git fetch upstream
-          if git merge-base --is-ancestor upstream/master HEAD; then
-            echo "changed=false" >> "$GITHUB_OUTPUT"
-          else
+          if ! git merge-base --is-ancestor upstream/master HEAD; then
             git merge upstream/master --no-edit
-            echo "changed=true" >> "$GITHUB_OUTPUT"
+            git push origin master
           fi
 
-      - name: Push merged changes
-        if: steps.sync.outputs.changed == 'true'
-        run: git push origin master
-
-      - name: Read version from TOC
-        if: steps.sync.outputs.changed == 'true'
+      - name: Check if release needed
         id: ver
         run: |
           VERSION=$(grep -m1 "^## Version:" Auctionator.toc | sed 's/.*Version: *//')
           TAG="v${VERSION}"
-          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
           echo "tag=$TAG" >> "$GITHUB_OUTPUT"
           if git ls-remote --tags origin | grep -q "refs/tags/${TAG}$"; then
             echo "tag_exists=true" >> "$GITHUB_OUTPUT"
@@ -57,7 +48,7 @@ jobs:
           fi
 
       - name: Build and publish GitHub Release
-        if: steps.sync.outputs.changed == 'true' && steps.ver.outputs.tag_exists == 'false'
+        if: steps.ver.outputs.tag_exists == 'false'
         uses: BigWigsMods/packager@v2
         env:
           GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
