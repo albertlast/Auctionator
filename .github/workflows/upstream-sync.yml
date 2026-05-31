@@ -48,8 +48,15 @@ jobs:
             git tag "$TAG"
           fi
 
-      - name: Build and publish GitHub Release
+      - name: Build addon zip
         if: steps.ver.outputs.tag_exists == 'false'
         uses: BigWigsMods/packager@v2
-        env:
-          GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
+        # No upload tokens — packager only creates the zip in .release/
+
+      - name: Publish GitHub Release
+        if: steps.ver.outputs.tag_exists == 'false'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.ver.outputs.tag }}
+          name: ${{ steps.ver.outputs.tag }}
+          files: .release/*.zip
