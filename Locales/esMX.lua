@@ -462,3 +462,4 @@ L["YOUR_HISTORY"] = "Tu historial"
 
   return L
 end
+

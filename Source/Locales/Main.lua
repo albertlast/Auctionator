@@ -38,6 +38,14 @@ for key, value in pairs(currentLocale) do
   _G["AUCTIONATOR_L_"..key] = value
 end
 
+-- Debug trap: surface missing locale keys with a clear error instead of silently returning nil
+setmetatable(currentLocale, {
+  __index = function(_, key)
+    error("Missing locale string accessed: '" .. tostring(key) .. "'", 2)
+  end
+})
+
+
 function Auctionator.Locales.Apply(s, ...)
   if currentLocale[s] ~= nil then
     return string.format(currentLocale[s], ...)

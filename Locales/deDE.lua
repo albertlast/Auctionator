@@ -285,7 +285,7 @@ L["LIST_SEARCH_STATUS"] = "Suche nach\\nGegenstand %s/%s in\\n%s"
 L["LOAD_HIGHER_PRICES"] = "Höhere Preise laden"
 L["LOAD_MORE_RESULTS"] = "Mehr Ergebnisse laden"
 L["MAKE_PERMANENT"] = "Dauerhaft machen"
-L["MAKE_PERMANENT_CONFIRM"] = "Um „%s\" dauerhaft zu machen, wähle einen neuen Namen dafür:"
+L["MAKE_PERMANENT_CONFIRM"] = "Um „%s“ dauerhaft zu machen, wähle einen neuen Namen dafür:"
 L["MAX"] = "max."
 L["MAX_COLON_X"] = "max: %s"
 L["MILL"] = "Mahlen"
@@ -453,6 +453,7 @@ L["X_STACKS_OF_X"] = "%s Stapel von %s"
 L["YOU"] = "Du"
 L["YOU_COLUMN"] = "Deine?"
 L["YOUR_HISTORY"] = "Dein Verlauf"
+
 
   return L
 end

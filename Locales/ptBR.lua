@@ -519,3 +519,4 @@ L["YOUR_HISTORY"] = "Seu Histórico"
 
   return L
 end
+
